@@ -1,20 +1,28 @@
 import 'package:chat/routes/routes.dart';
+import 'package:chat/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ( _ ) => AuthService()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: Colors.blueAccent,
+        ),
+        debugShowCheckedModeBanner: false,
+        title: 'Material App',
+        initialRoute: 'loading',
+        routes: appRoutes,
       ),
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      initialRoute: 'chat',
-      routes: appRoutes,
     );
   }
 }

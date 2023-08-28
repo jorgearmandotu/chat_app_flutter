@@ -1,5 +1,9 @@
-import 'package:chat/widgets/button_azul.dart';
+import 'package:chat/helpers/mostrar_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:chat/services/auth_service.dart';
+import 'package:chat/widgets/button_azul.dart';
 import 'package:chat/widgets/custom_input.dart';
 import 'package:chat/widgets/labels.dart';
 import 'package:chat/widgets/logo.dart';
@@ -16,9 +20,9 @@ class RegisterPage extends StatelessWidget {
               children: <Widget>[
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.94,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
+                  child: const Column(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children:  <Widget>[
                       Logo(title: 'Registro',),
                       _Form(),
                       Labels( ruta: 'login', labelText1: '¿Ya tienes una cuenta?', labelText2: 'Ingresa ahora!',),
@@ -49,6 +53,9 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -73,7 +80,18 @@ class __FormState extends State<_Form> {
           ),
           ButtonAzul(
             text: 'Registrar',
-            onPressed: () => {print(emailCtrl.text), print(passCtrl.text)},
+            onPressed: authService.autenticando ? null : () async {
+              print(emailCtrl.text);
+              print(passCtrl.text);
+              print(nameCtrl.text);
+              final registroOk = await authService.register(nameCtrl.text.trim(), emailCtrl.text.trim(), passCtrl.text.trim() );
+              if( !mounted ) return;
+              if( registroOk == true) {
+                Navigator.pushReplacementNamed(context, 'usuarios');
+              }else {
+                mostrarAlerta(context, 'Fallo al registrar ', registroOk );
+              }
+              },
           )
         ],
       ),
