@@ -11,7 +11,7 @@ class AuthService with ChangeNotifier {
 
   Usuario? usuario;
   bool _autenticando = false;
-  final _storage = new FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
   bool get autenticando => _autenticando;
   set autenticando( bool value ){
@@ -20,15 +20,20 @@ class AuthService with ChangeNotifier {
   }
 
   // Getters del token estaticos
-  static  Future<String?> getToken() async {
-    final _storage = new FlutterSecureStorage();
-    final token = await _storage.read(key: 'token');
+  static  Future<String> getToken() async {
+    const storage =   FlutterSecureStorage();
+    final token = await storage.read(key: 'token');
+    if(token != null){
     return token;
+    }
+    else{
+      return '';
+    }
   }
 
   static Future<void> deleteToken() async {
-    final _storage = FlutterSecureStorage();
-    await _storage.delete(key: 'token');
+    const  storage = FlutterSecureStorage();
+    await storage.delete(key: 'token');
   }
 
   

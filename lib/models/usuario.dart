@@ -12,7 +12,7 @@ class Usuario {
     String nombre;
     String email;
     bool online;
-    String uid;
+    String? uid;
 
     Usuario({
         required this.nombre,

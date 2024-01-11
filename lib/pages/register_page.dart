@@ -1,8 +1,11 @@
-import 'package:chat/helpers/mostrar_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:chat/helpers/mostrar_alert.dart';
+
+import 'package:chat/services/socket_service.dart';
 import 'package:chat/services/auth_service.dart';
+
 import 'package:chat/widgets/button_azul.dart';
 import 'package:chat/widgets/custom_input.dart';
 import 'package:chat/widgets/labels.dart';
@@ -55,6 +58,7 @@ class __FormState extends State<_Form> {
   Widget build(BuildContext context) {
 
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -78,15 +82,18 @@ class __FormState extends State<_Form> {
             textController: passCtrl,
             isPassword: true,
           ),
+
           ButtonAzul(
             text: 'Registrar',
-            onPressed: authService.autenticando ? null : () async {
-              print(emailCtrl.text);
-              print(passCtrl.text);
-              print(nameCtrl.text);
-              final registroOk = await authService.register(nameCtrl.text.trim(), emailCtrl.text.trim(), passCtrl.text.trim() );
+            onPressed: authService.autenticando ? ()=>{} : () async {
+              final registroOk = await authService.register(
+                nameCtrl.text.trim(), 
+                emailCtrl.text.trim(), 
+                passCtrl.text.trim() );
+                
               if( !mounted ) return;
               if( registroOk == true) {
+                socketService.connect();
                 Navigator.pushReplacementNamed(context, 'usuarios');
               }else {
                 mostrarAlerta(context, 'Fallo al registrar ', registroOk );
