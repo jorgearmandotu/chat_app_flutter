@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:chat/models/mensajes_response.dart';
-import 'package:chat/models/usuario.dart';
 import 'package:chat/services/auth_service.dart';
 import 'package:chat/services/socket_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,7 +25,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   SocketService? socketService;
   AuthService? authService;
 
-  List<ChatMessage>  _messages = [];
+  final List<ChatMessage>  _messages = [];
   bool _writing = false;
 
   @override
@@ -101,8 +100,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
         centerTitle: true,
         elevation: 1,
       ),
-      body: Container(
-        child: Column(
+      body: Column(
           children: <Widget>[
             Flexible(
                 child: ListView.builder(
@@ -115,15 +113,12 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             const Divider(
               height: 1,
             ),
-
-            //TODO: caja de texto
             Container(
               color: Colors.white,
               child: _inputChat(),
             )
           ],
         ),
-      ),
     );
   }
 

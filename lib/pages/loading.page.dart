@@ -40,14 +40,16 @@ const LoadingPage({super.key});
         )
         );
     }else{
+      if(context.mounted){
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: ( _, __, ___) => LoginPage(),
+          pageBuilder: ( _, __, ___) => const LoginPage(),
           transitionDuration: const Duration(milliseconds: 0)
         )
         );
       Navigator.pushReplacementNamed(context, 'login');
+      }else {return;}
     }
   }
 }

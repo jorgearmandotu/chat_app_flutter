@@ -63,14 +63,14 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future register( String nombre, String email, String Password ) async {
+  Future register( String nombre, String email, String password ) async {
 
     autenticando = true;
 
     final data = {
       'nombre': nombre,
       'email': email,
-      'password': Password,
+      'password': password,
     };
 
     final resp = await http.post(Uri.parse('${ Environment.apiUrl }/login/new'),

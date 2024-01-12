@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class _Form extends StatefulWidget {
-  const _Form({super.key});
+  const _Form();
 
   @override
   State<_Form> createState() => __FormState();
@@ -86,7 +86,9 @@ class __FormState extends State<_Form> {
                 Navigator.pushReplacementNamed(context, 'usuarios');
               }else{
                 // Mostrar alerta
+                if(mounted){
                 mostrarAlerta( context, 'Login Incorrecto', 'Revise sus credenciales de acceso.');
+                }else{ return;}
               }
               },
           )

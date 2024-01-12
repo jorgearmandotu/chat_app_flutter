@@ -1,5 +1,5 @@
 import 'package:chat/services/chat_service.dart';
-import 'package:chat/services/usuarios-service.dart';
+import 'package:chat/services/usuarios_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -25,7 +25,6 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _cargarUsuarios();
     super.initState();
   }

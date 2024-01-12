@@ -1,6 +1,6 @@
 import 'package:chat/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import 'package:chat/global/environment.dart';
 
@@ -14,11 +14,11 @@ enum ServerStatus {
 class SocketService with ChangeNotifier {
 
   ServerStatus _serverStatus = ServerStatus.connecting;
-  late IO.Socket _socket;
+  late io.Socket _socket;
 
   ServerStatus get serverStatus => _serverStatus;
   
-  IO.Socket get socket => _socket;
+  io.Socket get socket => _socket;
   Function get emit => _socket.emit;
 
 
@@ -28,7 +28,7 @@ class SocketService with ChangeNotifier {
     final token = await AuthService.getToken();
 
     // Dart client
-    _socket = IO.io( Environment.socketUrl, {
+    _socket = io.io( Environment.socketUrl, {
       'transports': ['websocket'],
       'autoConnect': true,
       'forceNew': true,
